@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3b5998;
+            --primary-dark: #2d4373;
+            --header-bg: #071422;
+            --text-light: #ffffff;
+            --text-dark: #1d1d1d;
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--text-light);
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 5%;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            padding: 0;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        nav ul li:hover {
+            color: #1da1f2;
+        }
+
+        .badge {
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            position: absolute;
+            top: -5px;
+            right: -15px;
+        }
+
+        main {
+            display: flex;
+            gap: 20px;
+            padding: 20px 5%;
+            flex-wrap: wrap;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .left-sidebar, .right-sidebar {
+            width: 280px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            flex-shrink: 0;
+            position: sticky;
+            align-self: flex-start;
+            top: 80px;
+        }
+
+        .feed {
+            flex-grow: 1;
+            min-width: 300px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .status-box {
+            display: flex;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        .status-box input {
+            flex-grow: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .status-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(59, 89, 152, 0.2);
+        }
+
+        .status-box button {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 0 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            min-width: 80px;
+        }
+
+        .status-box button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        /* Profile Card */
+        .profile-card {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .profile-card img {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .profile-card h2 {
+            margin: 5px 0;
+            font-size: 20px;
+            font-style: bold;
+        }
+
+        .profile-card p {
+            color: #666;
+            font-size: 12px;
+            margin: 3px 0;
+        }
+
+        /* Interests */
+        .interests {
+            margin-bottom: 20px;
+        }
+
+        .interests h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #e9ebee;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin: 0 5px 8px 0;
+            font-size: 13px;
+            color: #333;
+        }
+
+        /* Post */
+        .post {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .post-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 12px;
+        }
+
+        .post-header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .post-header span {
+            color: #65676b;
+            font-size: 13px;
+        }
+
+        .post p {
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .post img {
+            max-width: 100%;
+            display: block;
+            margin: 10px 0;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .post img:hover {
+            opacity: 0.9;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .actions button {
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #65676b;
+            font-weight: 600;
+        }
+
+        .actions button:hover {
+            background-color: #f0f2f5;
+            color: var(--primary-color);
+        }
+
+        /* Events */
+        .events {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .events h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .events p {
+            padding: 10px;
+            background: #f0f8ff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        /* Friend Requests */
+        .friend-requests h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .friend-request-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 10px;
+        }
+
+        .friend-request-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .friend-request-item img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .friend-request-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .friend-request-item button {
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 12px;
+        }
+
+        .friend-request-item button:first-child {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .friend-request-item button:first-child:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .friend-request-item button:last-child {
+            background-color: #e4e6eb;
+        }
+
+        .friend-request-item button:last-child:hover {
+            background-color: #d8dadf;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            main {
+                padding: 20px 3%;
+            }
+            
+            .left-sidebar, .right-sidebar {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .right-sidebar {
+                display: none;
+            }
+            
+            .left-sidebar {
+                width: 300px;
+            }
+            
+            .feed {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 3%;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            main {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .left-sidebar, .right-sidebar {
+                width: 100%;
+                position: static;
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav ul li span {
+                display: none;
+            }
+            
+            nav ul li i {
+                font-size: 20px;
+            }
+            
+            .badge {
+                top: 0;
+                right: -5px;
+            }
+            
+            .status-box {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .status-box button {
+                padding: 10px;
+                width: 100%;
+            }
+            
+            .friend-request-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .friend-request-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .friend-request-item button {
+                flex-grow: 1;
+                padding: 8px;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .post, .status-box, .left-sidebar, .right-sidebar {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="BSlogo.png" alt="BSLogo">
+            <span>BoredSpace</span>
+        </div>
+        <nav>
+            <ul>
+                <li><i class="fas fa-home"></i> <span>Home</span></li>
+                <li><i class="fas fa-user"></i> <span>Profile</span></li>
+                <li>
+                    <i class="fas fa-bell"></i> 
+                    <span>Notifications</span> 
+                    <span class="badge">156</span>
+                </li>
+                <li><i class="fas fa-envelope"></i> <span>Messages</span></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <!-- Left Sidebar (Profile Card) -->
+        <aside class="left-sidebar">
+            <div class="profile-card">
+                <img src="profile.jpg" alt="Profile Picture">
+                <h2>Goldae Love Rebucas</h2>
+                <p>WEB DESIGNER | STUDENT | MUSIC LOVER</p>
+                <p>Cagayan de Oro City, PH</p>
+            </div>
+            <div class="interests">
+                <h3>Interests</h3>
+                <span class="tag">Web Design</span>
+                <span class="tag">Games</span>
+                <span class="tag">Food</span>
+                <span class="tag">Sleep</span>
+                <span class="tag">Motorcycling</span>
+                <span class="tag">Music</span>
+            </div>
+        </aside>
+        
+        <!-- Main Feed -->
+        <section class="feed">
+            <div class="status-box">
+                <input type="text" placeholder="Express your thoughts">
+                <button>Post</button>
+            </div>
+            <div class="post">
+                <div class="post-header">
+                    <img src="bijen.jpg" alt="User Image">
+                    <div>
+                        <h3>Bijen Nams</h3>
+                        <span>10 min ago</span>
+                    </div>
+                </div>
+                <p>Breathtaking Dansoliwood overview</p>
+                <img src="dansoliwood.jpg" alt="Post Image">
+                <div class="actions">
+                    <button><i class="fas fa-thumbs-up"></i> Like</button>
+                    <button><i class="fas fa-comment"></i> Comment</button>
+                    <button><i class="fas fa-share"></i> Share</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Right Sidebar (Events & Friend Requests) -->
+        <aside class="right-sidebar">
+            <div class="events">
+                <h3>Upcoming Events</h3>
+                <p>Holiday - Friday 15:00</p>
+                <p>Team Meeting - Tomorrow 10:00</p>
+            </div>
+            <div class="friend-requests">
+                <h3>Friend Requests</h3>
+                <div class="friend-request-item">
+                    <div class="friend-request-info">
+                        <img src="nadine.jpeg" alt="Bijen">
+                        <span>Nadine Lustre</span>
+                    </div>
+                    <div class="friend-request-actions">
+                        <button>Accept</button>
+                        <button>Decline</button>
+                    </div>
+                </div>
+                <div class="friend-request-item">
+                    <div class="friend-request-info">
+                        <img src="james.jpg" alt="User">
+                        <span>James Reid</span>
+                    </div>
+                    <div class="friend-request-actions">
+                        <button>Accept</button>
+                        <button>Decline</button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', () => {
+                    button.style.transform = 'translateY(1px)';
+                });
+                button.addEventListener('mouseup', () => {
+                    button.style.transform = 'translateY(0)';
+                });
+                button.addEventListener('mouseleave', () => {
+                    button.style.transform = 'translateY(0)';
+                });
+            });
+            
+            const cards = document.querySelectorAll('.post, .left-sidebar, .right-sidebar');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.boxShadow = 'var(--shadow)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
